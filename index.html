@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Yousif Aldakoki</title>
+
+  <style>
+    :root{
+      --bg:#000;
+      --fg:#f5f5f5;
+      --muted:#b8b8b8;
+      --line:rgba(255,255,255,.14);
+      --card:#0f0f0f;
+      --cardHover:#161616;
+      --pill:#141414;
+    }
+
+    *{box-sizing:border-box}
+
+    html,body{
+      margin:0;
+      height:100%;
+      background:var(--bg);
+      color:var(--fg);
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+    }
+
+    /* FORCE CANVAS SIZE + VISIBILITY */
+    #bg{
+      position:fixed;
+      inset:0;
+      width:100vw;
+      height:100vh;
+      display:block;
+      z-index:0;
+      pointer-events:none;
+      /* tiny tint so you can confirm canvas exists even if lines fail */
+      background:rgba(0,0,0,0.001);
+    }
+
+    .page{
+      position:relative;
+      z-index:1;
+      max-width:1040px;
+      margin:auto;
+      padding:96px 28px 160px;
+    }
+
+    header{
+      display:flex;
+      justify-content:space-between;
+      gap:32px;
+      flex-wrap:wrap;
+      padding-bottom:28px;
+      border-bottom:1px solid var(--line);
+      margin-bottom:56px;
+    }
+
+    h1{
+      font-size:30px;
+      margin:0;
+      font-weight:650;
+      letter-spacing:-0.02em;
+    }
+
+    .tagline{
+      margin-top:8px;
+      max-width:560px;
+      font-size:14px;
+      color:var(--muted);
+      line-height:1.4;
+    }
+
+    nav a{
+      margin-left:18px;
+      font-size:13px;
+      color:var(--muted);
+      text-decoration:none;
+      border-bottom:1px solid transparent;
+    }
+    nav a:hover{border-color:var(--muted)}
+
+    section{margin-top:72px}
+
+    h2{
+      font-size:12px;
+      letter-spacing:.18em;
+      color:var(--muted);
+      text-transform:uppercase;
+      margin-bottom:22px;
+    }
+
+    .projects{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+      gap:20px;
+    }
+
+    .card{
+      display:block;
+      padding:22px;
+      border-radius:16px;
+      background:var(--card);
+      border:1px solid var(--line);
+      color:var(--fg);
+      text-decoration:none;
+      transition:background .2s ease, transform .2s ease;
+    }
+
+    .card:hover{
+      background:var(--cardHover);
+      transform:translateY(-3px);
+    }
+
+    .card h3{
+      margin:0 0 8px;
+      font-size:15px;
+      font-weight:600;
+    }
+
+    .card p{
+      margin:0;
+      font-size:13px;
+      color:var(--muted);
+      line-height:1.45;
+    }
+
+    .meta{
+      margin-top:12px;
+      font-size:12px;
+      color:#9a9a9a;
+    }
+
+    .skills{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+
+    .pill{
+      padding:7px 12px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      font-size:12px;
+      color:var(--muted);
+      background:var(--pill);
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="bg"></canvas>
+
+  <main class="page">
+    <header>
+      <div>
+        <h1>Yousif Aldakoki</h1>
+        <div class="tagline">
+          Software Engineering bEng @ York University · ML research (wireless / radar) · SaaS, automation & systems
+        </div>
+      </div>
+      <nav>
+        <a href="mailto:yousifaldakoki@gmail.com">Email</a>
+        <a href="https://github.com/ysf-ad" target="_blank" rel="noreferrer">GitHub</a>
+        <a href="https://linkedin.com/in/yousif-aldakoki" target="_blank" rel="noreferrer">LinkedIn</a>
+       
+      </nav>
+    </header>
+
+    <section>
+      <h2>Selected Projects</h2>
+      <div class="projects">
+      <a class="card" href="https://github.com/ysf-ad/iq-cmae" target="_blank" rel="noreferrer">
+  <h3>IQ-CMAE — Multi-Modal Contrastive Masked Autoencoder</h3>
+  <p>
+    Self-supervised learning framework for wireless signal classification using raw I/Q traces.
+    Combines <strong>masked autoencoding</strong> and <strong>contrastive learning</strong> with
+    controlled multi-modal fusion.
+  </p>
+  <div class="meta">
+    PyTorch · Transformers · Self-Supervised Learning · RF / Wireless
+  </div>
+</a>
+
+        <a class="card" href="https://github.com/ysf-ad/waste-fusion-retrieval
+">
+          <h3>Real-Time Waste Classification System</h3>
+          <p>Cloud-assisted waste classifier using edge cameras and PyTorch inference. Achieved <strong>96% accuracy</strong> with <strong>87% lower inference cost</strong>.</p>
+          <div class="meta">PyTorch · ONNX · Edge ML</div>
+        </a>
+
+        <a class="card" href="#">
+          <h3>MLP From Scratch (C++ / CUDA)</h3>
+          <p>Implemented a neural network end-to-end without frameworks, including custom CUDA kernels.</p>
+          <div class="meta">C++ · CUDA · Numerical Computing</div>
+        </a>
+
+        <a class="card" href="https://github.com/ysf-ad/greek_processor
+">
+          <h3>Volatility Surface Modeling & Options Analytics</h3>
+          <p>Modeled implied volatility surfaces from options data and analyzed dealer gamma/vega exposure.</p>
+          <div class="meta">Python · Neural Nets · Data</div>
+        </a>
+
+        <a class="card" href="https://github.com/ysf-ad/extruder-data
+">
+          <h3>Manufacturing Analytics Dashboard</h3>
+          <p>Real-time PLC analytics platform with dashboards, editable tables, and statistical metrics.</p>
+          <div class="meta">TypeScript · React · Remix</div>
+        </a>
+        <a class="card" href="https://github.com/ysf-ad/gyro-mnist" target="_blank" rel="noreferrer">
+  <h3>Gyro-MNIST — Air-Drawn Digit Recognition</h3>
+  <p>
+    Embedded ML system where digits are drawn in the air using an Accelerometer and classified
+    with Resnet-18 trained on MNIST-style representations.
+  </p>
+  <div class="meta">
+    Embedded ML · Sensors · CNNs · Arduino / MATLAB
+  </div>
+</a>
+
+      </div>
+    </section>
+
+<section>
+  <h2>Skills</h2>
+  <div class="skills">
+    <!-- ML / AI -->
+    <span class="pill">PyTorch</span>
+    <span class="pill">TensorFlow</span>
+    <span class="pill">ONNX</span>
+    <span class="pill">Transformers</span>
+    <span class="pill">Reinforcement Learning</span>
+    <span class="pill">Self-Supervised Learning</span>
+    <span class="pill">Computer Vision</span>
+
+    <!-- Languages -->
+    <span class="pill">Python</span>
+    <span class="pill">C / C++</span>
+    <span class="pill">CUDA</span>
+    <span class="pill">Java</span>
+    <span class="pill">JavaScript</span>
+    <span class="pill">TypeScript</span>
+    <span class="pill">HTML / CSS</span>
+
+    <!-- Frameworks & Infra -->
+    <span class="pill">React</span>
+    <span class="pill">Remix</span>
+    <span class="pill">Node.js</span>
+    <span class="pill">Docker</span>
+    <span class="pill">Git</span>
+    <span class="pill">AWS</span>
+    <span class="pill">Cloudflare</span>
+  </div>
+</section>
+
+  </main>
+
+  <script>
+    (function(){
+      const canvas = document.getElementById("bg");
+const ctx = canvas.getContext("2d");
+
+let mx = window.innerWidth / 2;
+let my = window.innerHeight / 2;
+let smx = mx, smy = my; // smoothed mouse
+let t = 0;
+
+function resize(){
+  canvas.width  = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+window.addEventListener("resize", resize);
+resize();
+
+window.addEventListener("mousemove", e => {
+  mx = e.clientX;
+  my = e.clientY;
+});
+
+function draw(){
+  const W = canvas.width;
+  const H = canvas.height;
+
+  // smooth mouse (critical)
+smx += (mx - smx) * 0.8;
+smy += (my - smy) * 0.8;
+
+
+  ctx.clearRect(0, 0, W, H);
+
+  const spacing = 44;
+  const strength = 10;      // ↓ MUCH weaker
+  const sigma = 150;        // wider, softer
+  const seg = 10;
+
+  ctx.strokeStyle = "rgba(255,255,255,0.12)"; // ↓ subtler grid
+  ctx.lineWidth = 1;
+
+  function warp(x, y){
+    const dx = x - smx;
+    const dy = y - smy;
+    const r2 = dx*dx + dy*dy;
+
+    const w = Math.exp(-r2 / (2 * sigma * sigma));
+    const r = Math.sqrt(r2) + 0.0001;
+
+    return {
+      x: x - (dx / r) * strength * w,
+      y: y - (dy / r) * strength * w
+    };
+  }
+
+  // horizontal lines
+  for(let y = -spacing; y < H + spacing; y += spacing){
+    ctx.beginPath();
+    let first = true;
+
+    for(let x = -spacing; x < W + spacing; x += seg){
+      const p = warp(x, y);
+      if(first){
+        ctx.moveTo(p.x, p.y);
+        first = false;
+      } else {
+        ctx.lineTo(p.x, p.y);
+      }
+    }
+    ctx.stroke();
+  }
+
+  // vertical lines
+  for(let x = -spacing; x < W + spacing; x += spacing){
+    ctx.beginPath();
+    let first = true;
+
+    for(let y = -spacing; y < H + spacing; y += seg){
+      const p = warp(x, y);
+      if(first){
+        ctx.moveTo(p.x, p.y);
+        first = false;
+      } else {
+        ctx.lineTo(p.x, p.y);
+      }
+    }
+    ctx.stroke();
+  }
+
+  requestAnimationFrame(draw);
+}
+
+draw();
+
+    })();
+  </script>
+</body>
+</html>
