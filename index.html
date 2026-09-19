@@ -1,358 +1,184 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Yousif Aldakoki</title>
-  <link rel="icon" type="image/png" href="./favicon.png" sizes="32x32" />
-
-  <style>
-    :root{
-      --bg:#000;
-      --fg:#f5f5f5;
-      --muted:#b8b8b8;
-      --line:rgba(255,255,255,.14);
-      --card:#0f0f0f;
-      --cardHover:#161616;
-      --pill:#141414;
-    }
-
-    *{box-sizing:border-box}
-
-    html,body{
-      margin:0;
-      height:100%;
-      background:var(--bg);
-      color:var(--fg);
-      font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
-    }
-
-    /* FORCE CANVAS SIZE + VISIBILITY */
-    #bg{
-      position:fixed;
-      inset:0;
-      width:100vw;
-      height:100vh;
-      display:block;
-      z-index:0;
-      pointer-events:none;
-      /* tiny tint so you can confirm canvas exists even if lines fail */
-      background:rgba(0,0,0,0.001);
-    }
-
-    .page{
-      position:relative;
-      z-index:1;
-      max-width:1040px;
-      margin:auto;
-      padding:26px 28px 10px;
-    }
-
-    header{
-      display:flex;
-      justify-content:space-between;
-      gap:32px;
-      flex-wrap:wrap;
-      padding-bottom:15px;
-      border-bottom:1px solid var(--line);
-      margin-bottom:16px;
-    }
-
-    h1{
-      font-size:30px;
-      margin:0;
-      font-weight:650;
-      letter-spacing:-0.02em;
-    }
-
-    .tagline{
-      margin-top:8px;
-      max-width:560px;
-      font-size:14px;
-      color:var(--muted);
-      line-height:1.4;
-    }
-
-    nav a{
-      margin-left:18px;
-      font-size:13px;
-      color:var(--muted);
-      text-decoration:none;
-      border-bottom:1px solid transparent;
-    }
-    nav a:hover{border-color:var(--muted)}
-
-    section{margin-top:26px}
-
-    h2{
-      font-size:12px;
-      letter-spacing:.18em;
-      color:var(--muted);
-      text-transform:uppercase;
-      margin-bottom:22px;
-    }
-
-    .projects{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-      gap:20px;
-    }
-
-    .card{
-      display:block;
-      padding:22px;
-      border-radius:16px;
-      background:var(--card);
-      border:1px solid var(--line);
-      color:var(--fg);
-      text-decoration:none;
-      transition:background .2s ease, transform .2s ease;
-    }
-
-    .card:hover{
-      background:var(--cardHover);
-      transform:translateY(-3px);
-    }
-
-    .card h3{
-      margin:0 0 8px;
-      font-size:15px;
-      font-weight:600;
-    }
-
-    .card p{
-      margin:0;
-      font-size:13px;
-      color:var(--muted);
-      line-height:1.45;
-    }
-
-    .meta{
-      margin-top:12px;
-      font-size:12px;
-      color:#9a9a9a;
-    }
-
-    .skills{
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-    }
-
-    .pill{
-      padding:7px 12px;
-      border-radius:999px;
-      border:1px solid var(--line);
-      font-size:12px;
-      color:var(--muted);
-      background:var(--pill);
-    }
-  </style>
-</head>
-
-<body>
-  <canvas id="bg"></canvas>
-
-  <main class="page">
-    <header>
-      <div>
-        <h1>Yousif Aldakoki</h1>
-        <div class="tagline">
-          Software Engineering bEng @ York University · ML research (wireless / radar) · SaaS, automation & systems
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <title>Yousif Aldakoki — Software Engineering & ML Research</title>
+    <meta
+      name="description"
+      content="Yousif Aldakoki. Software engineering at York University, machine learning research, open-source tools, and industrial software. Selected projects and publications."
+    />
+    <link rel="canonical" href="https://yousifaldakoki.com/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Yousif Aldakoki — Projects & Research" />
+    <meta
+      property="og:description"
+      content="Software engineering, machine learning research, and open-source tools. Explore my projects, publications, and resume."
+    />
+    <meta property="og:url" content="https://yousifaldakoki.com/" />
+    <meta
+      property="og:image"
+      content="https://yousifaldakoki.com/assets/embedding-explorer.png"
+    />
+    <meta
+      property="og:image:alt"
+      content="Semantic Auto-Linker's embedding explorer in Obsidian"
+    />
+    <link rel="icon" type="image/png" href="./favicon.png" />
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="./site.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="page">
+      <header id="top">
+        <div class="identity">
+          <h1>Yousif Aldakoki</h1>
+          <p class="location">Toronto, Canada</p>
         </div>
-      </div>
-      <nav>
-        <a href="mailto:yousifaldakoki@gmail.com">Email</a>
-        <a href="https://github.com/ysf-ad" target="_blank" rel="noreferrer">GitHub</a>
-        <a href="https://linkedin.com/in/yousif-aldakoki" target="_blank" rel="noreferrer">LinkedIn</a>
-       
-      </nav>
-    </header>
-
-    <section>
-      <h2>Selected Projects</h2>
-      <div class="projects">
-      <a class="card" href="https://github.com/ysf-ad/iq-cmae" target="_blank" rel="noreferrer">
-  <h3>IQ-CMAE — Multi-Modal Contrastive Masked Autoencoder</h3>
-  <p>
-    Self-supervised learning framework for wireless signal classification using raw I/Q traces.
-    Combines <strong>masked autoencoding</strong> and <strong>contrastive learning</strong> with
-    controlled multi-modal fusion.
-  </p>
-  <div class="meta">
-    PyTorch · Transformers · Self-Supervised Learning · RF / Wireless
-  </div>
-</a>
-
-        <a class="card" href="https://github.com/ysf-ad/waste-fusion-retrieval
-">
-          <h3>Real-Time Waste Classification System</h3>
-          <p>Cloud-assisted waste classifier using edge cameras and PyTorch inference. Achieved <strong>96% accuracy</strong> with <strong>87% lower inference cost</strong>.</p>
-          <div class="meta">PyTorch · ONNX · Edge ML</div>
-        </a>
-
-        <a class="card" href="#">
-          <h3>MLP From Scratch (C++ / CUDA)</h3>
-          <p>Implemented a neural network end-to-end without frameworks, including custom CUDA kernels.</p>
-          <div class="meta">C++ · CUDA · Numerical Computing</div>
-        </a>
-
-        <a class="card" href="https://github.com/ysf-ad/greek_processor
-">
-          <h3>Volatility Surface Modeling & Options Analytics</h3>
-          <p>Modeled implied volatility surfaces from options data and analyzed dealer gamma/vega exposure.</p>
-          <div class="meta">Python · Neural Nets · Data</div>
-        </a>
-
-        <a class="card" href="https://github.com/ysf-ad/extruder-data
-">
-          <h3>Manufacturing Analytics Dashboard</h3>
-          <p>Real-time PLC analytics platform with dashboards, editable tables, and statistical metrics.</p>
-          <div class="meta">TypeScript · React · Remix</div>
-        </a>
-        <a class="card" href="https://github.com/ysf-ad/gyro-mnist" target="_blank" rel="noreferrer">
-  <h3>Gyro-MNIST — Air-Drawn Digit Recognition</h3>
-  <p>
-    Embedded ML system where digits are drawn in the air using an Accelerometer and classified
-    with Resnet-18 trained on MNIST-style representations.
-  </p>
-  <div class="meta">
-    Embedded ML · Sensors · CNNs · Arduino / MATLAB
-  </div>
-</a>
-
-      </div>
-    </section>
-
-<section>
-  <h2>Skills</h2>
-  <div class="skills">
-    <!-- ML / AI -->
-    <span class="pill">PyTorch</span>
-    <span class="pill">TensorFlow</span>
-    <span class="pill">ONNX</span>
-    <span class="pill">Transformers</span>
-    <span class="pill">Reinforcement Learning</span>
-    <span class="pill">Self-Supervised Learning</span>
-    <span class="pill">Computer Vision</span>
-
-    <!-- Languages -->
-    <span class="pill">Python</span>
-    <span class="pill">C / C++</span>
-    <span class="pill">CUDA</span>
-    <span class="pill">Java</span>
-    <span class="pill">JavaScript</span>
-    <span class="pill">TypeScript</span>
-    <span class="pill">HTML / CSS</span>
-
-    <!-- Frameworks & Infra -->
-    <span class="pill">React</span>
-    <span class="pill">Remix</span>
-    <span class="pill">Node.js</span>
-    <span class="pill">Docker</span>
-    <span class="pill">Git</span>
-    <span class="pill">AWS</span>
-    <span class="pill">Cloudflare</span>
-  </div>
-</section>
-
-  </main>
-
-  <script>
-    (function(){
-      const canvas = document.getElementById("bg");
-const ctx = canvas.getContext("2d");
-
-let mx = window.innerWidth / 2;
-let my = window.innerHeight / 2;
-let smx = mx, smy = my; // smoothed mouse
-let t = 0;
-
-function resize(){
-  canvas.width  = window.innerWidth;
-  canvas.height = window.innerHeight;
-}
-window.addEventListener("resize", resize);
-resize();
-
-window.addEventListener("mousemove", e => {
-  mx = e.clientX;
-  my = e.clientY;
-});
-
-function draw(){
-  const W = canvas.width;
-  const H = canvas.height;
-
-  // smooth mouse (critical)
-smx += (mx - smx) * 0.8;
-smy += (my - smy) * 0.8;
-
-
-  ctx.clearRect(0, 0, W, H);
-
-  const spacing = 44;
-  const strength = 10;      // ↓ MUCH weaker
-  const sigma = 150;        // wider, softer
-  const seg = 10;
-
-  ctx.strokeStyle = "rgba(255,255,255,0.12)"; // ↓ subtler grid
-  ctx.lineWidth = 1;
-
-  function warp(x, y){
-    const dx = x - smx;
-    const dy = y - smy;
-    const r2 = dx*dx + dy*dy;
-
-    const w = Math.exp(-r2 / (2 * sigma * sigma));
-    const r = Math.sqrt(r2) + 0.0001;
-
-    return {
-      x: x - (dx / r) * strength * w,
-      y: y - (dy / r) * strength * w
-    };
-  }
-
-  // horizontal lines
-  for(let y = -spacing; y < H + spacing; y += spacing){
-    ctx.beginPath();
-    let first = true;
-
-    for(let x = -spacing; x < W + spacing; x += seg){
-      const p = warp(x, y);
-      if(first){
-        ctx.moveTo(p.x, p.y);
-        first = false;
-      } else {
-        ctx.lineTo(p.x, p.y);
-      }
-    }
-    ctx.stroke();
-  }
-
-  // vertical lines
-  for(let x = -spacing; x < W + spacing; x += spacing){
-    ctx.beginPath();
-    let first = true;
-
-    for(let y = -spacing; y < H + spacing; y += seg){
-      const p = warp(x, y);
-      if(first){
-        ctx.moveTo(p.x, p.y);
-        first = false;
-      } else {
-        ctx.lineTo(p.x, p.y);
-      }
-    }
-    ctx.stroke();
-  }
-
-  requestAnimationFrame(draw);
-}
-
-draw();
-
-    })();
-  </script>
-</body>
+        <p class="intro">
+          Software Engineering at York University.<br />I build ML systems,
+          open-source tools, and industrial software.
+        </p>
+        <div class="header-links">
+          <div class="contact-links">
+            <a href="mailto:yousifaldakoki@gmail.com"
+              >Email <span aria-hidden="true">↗</span></a
+            ><a href="https://github.com/ysf-ad"
+              >GitHub <span aria-hidden="true">↗</span></a
+            ><a href="https://linkedin.com/in/yousif-aldakoki"
+              >LinkedIn <span aria-hidden="true">↗</span></a
+            ><a class="resume" href="./assets/Yousif-Aldakoki-Resume.pdf"
+              >Resume <span aria-hidden="true">↗</span></a
+            >
+          </div>
+        </div>
+      </header>
+      <main id="main">
+        <div class="work-grid">
+          <section id="projects" aria-labelledby="projects-title">
+            <div class="section-heading">
+              <h2 id="projects-title">Projects</h2>
+              <a
+                class="subtle-link"
+                href="https://github.com/ysf-ad?tab=repositories"
+                >All on GitHub <span aria-hidden="true">↗</span></a
+              >
+            </div>
+            <article class="project featured">
+              <div class="featured-copy">
+                <h3>
+                  <a href="https://github.com/ysf-ad/semantic-auto-linker"
+                    >Semantic Auto-Linker <span aria-hidden="true">↗</span></a
+                  >
+                </h3>
+                <p>
+                  An Obsidian plugin for local semantic search and suggested
+                  note links. Built with TypeScript; downloaded over 1,000
+                  times.
+                  <a href="./assets/embedding-explorer.png">Screenshot</a>
+                </p>
+              </div>
+            </article>
+            <article class="project">
+              <h3>
+                <a href="https://github.com/ysf-ad/mlp-cpp"
+                  >Neural network from scratch
+                  <span aria-hidden="true">↗</span></a
+                >
+              </h3>
+              <p>
+                A neural network implemented in C++, with handwritten training
+                and CUDA-accelerated inference. 97% test accuracy on MNIST.
+              </p>
+            </article>
+            <article class="project">
+              <h3>
+                <a href="https://github.com/ysf-ad/waste-fusion-retrieval"
+                  >Real-time waste classifier
+                  <span aria-hidden="true">↗</span></a
+                >
+              </h3>
+              <p>
+                An edge-camera classifier built with PyTorch and ONNX. 94%
+                held-out test accuracy; first place at the York Engineering
+                Competition.
+              </p>
+            </article>
+            <article class="project">
+              <h3>
+                <a href="https://github.com/ysf-ad/extruder-data"
+                  >Manufacturing analytics <span aria-hidden="true">↗</span></a
+                >
+              </h3>
+              <p>
+                Live production dashboards for DigitMakers, connecting PLC data
+                to the cloud through a Raspberry Pi and replacing manual
+                reporting.
+              </p>
+            </article>
+          </section>
+          <section id="research" aria-labelledby="research-title">
+            <div class="section-heading">
+              <h2 id="research-title">Research</h2>
+            </div>
+            <p class="research-note">
+              Three first-author papers accepted in 2026.
+            </p>
+            <article class="paper">
+              <h3>
+                <a href="https://github.com/ysf-ad/iq-cmae"
+                  >IQ-CMAE: Multi-modal Contrastive Masked Autoencoder for
+                  IQ-based Signal Classification
+                  <span aria-hidden="true">↗</span></a
+                >
+              </h3>
+              <p>IEEE Transactions on Neural Networks and Learning Systems</p>
+            </article>
+            <article class="paper">
+              <h3>
+                <a href="https://github.com/ysf-ad/radar-dnn-mcts"
+                  >Transformer-based MCTS for Cognitive Radar Task Scheduling in
+                  Dynamic Environments <span aria-hidden="true">↗</span></a
+                >
+              </h3>
+              <p>IEEE RadarConf</p>
+            </article>
+            <article class="paper">
+              <h3>
+                Sparse Mixture-of-Experts Transformer for IQ-based 5G-NR
+                Synchronization Signal Classification
+              </h3>
+              <p>IEEE GLOBECOM</p>
+            </article>
+            <p class="review-note">
+              Reviewer: IEEE GLOBECOM & OJCOMS · 6 manuscripts
+            </p>
+          </section>
+        </div>
+        <section class="experience" aria-labelledby="experience-title">
+          <h2 id="experience-title">Experience</h2>
+          <div class="experience-grid">
+            <div>
+              <h3>Software Developer <span>· DigitMakers</span></h3>
+              <p>Jun 2024 – Present · Part-time</p>
+              <p>Web integrations, automation, and PLC controls.</p>
+            </div>
+            <div>
+              <h3>Undergraduate Researcher <span>· York University</span></h3>
+              <p>May 2025 – Aug 2026</p>
+              <p>Research ideation, method development, and evaluation.</p>
+            </div>
+          </div>
+        </section>
+      </main>
+      <footer>
+        <span>© <span id="year">2026</span> Yousif Aldakoki</span
+        ><a href="mailto:yousifaldakoki@gmail.com"
+          >yousifaldakoki@gmail.com <span aria-hidden="true">↗</span></a
+        >
+      </footer>
+    </div>
+  </body>
 </html>
