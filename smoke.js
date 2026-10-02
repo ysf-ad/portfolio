@@ -213,7 +213,7 @@
     };
   }
 
-  const SIM_RES = 128;
+  const SIM_RES = 192;
   const DYE_RES = 512;
   let velocity, dye, divergence, curl, pressure;
 
@@ -407,8 +407,8 @@
 
   function applyPointer() {
     if (!pointer.moved) return;
-    const force = 5200;
-    splat(pointer.x, pointer.y, pointer.dx * force * (canvas.width / canvas.height), pointer.dy * force, null, 0.0028);
+    const force = 48000; // a small brush, but a strong one
+    splat(pointer.x, pointer.y, pointer.dx * force * (canvas.width / canvas.height), pointer.dy * force, null, 0.00012); // ~5x narrower than before
     pointer.dx = 0;
     pointer.dy = 0;
     pointer.moved = false;

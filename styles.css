@@ -228,24 +228,82 @@ h3 a:hover {
   color: var(--muted);
 }
 
-/* projects */
+/* projects: equal cards, each with a framed window onto the project rising from the bottom edge */
 .project-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
+  gap: 14px;
 }
 .project {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  padding: 20px;
-  background: var(--surface);
+  padding: 18px 18px 138px;
   border: 1px solid var(--line);
-  border-radius: 10px;
+  border-radius: 12px;
+  background: var(--surface);
+  transition: border-color 0.25s, box-shadow 0.3s var(--ease-out);
+}
+.project-art {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 50%;
+}
+img.project-art {
+  /* a framed window onto the project, rising from the bottom edge of the card */
+  top: auto;
+  bottom: 0;
+  left: 18px;
+  width: calc(100% - 36px);
+  height: 118px;
+  object-position: 50% 0;
+  border: 1px solid var(--line);
+  border-bottom: 0;
+  border-radius: 8px 8px 0 0;
+  box-shadow: 0 10px 30px -12px rgba(20, 16, 40, 0.28);
+  transform: translateY(8px);
+  transition: transform 0.6s var(--ease-out), box-shadow 0.6s var(--ease-out);
+}
+.project:hover img.project-art {
+  transform: translateY(0);
+  box-shadow: 0 16px 36px -12px rgba(20, 16, 40, 0.38);
+}
+.project:hover {
+  border-color: color-mix(in srgb, var(--line), var(--fg) 14%);
+  box-shadow: var(--shadow);
+}
+img.project-art.center {
+  object-position: 50% 50%;
+}
+img.project-art.soft {
+  filter: saturate(0.5);
+  opacity: 0.7;
+}
+.project-body {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+.project h3 a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
 }
 .project p {
   font-size: 15px;
   color: var(--muted);
+}
+.project .status {
+  white-space: nowrap;
+  font-size: 13px;
+  color: var(--faint);
 }
 .project .metric {
   font-size: 14px;
@@ -379,14 +437,6 @@ footer {
   transform: none;
 }
 /* small hover details */
-.project {
-  transition: transform 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out), border-color 0.25s;
-}
-.project:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow);
-  border-color: color-mix(in srgb, var(--line), var(--fg) 12%);
-}
 a {
   transition: text-decoration-color 0.2s, color 0.2s;
 }
@@ -426,7 +476,9 @@ header {
   /* fade out before the header ends, so no section text ever sits on colour */
   -webkit-mask-image: linear-gradient(to bottom, #000 60%, transparent 96%);
   mask-image: linear-gradient(to bottom, #000 60%, transparent 96%);
-  /* fallback when WebGL is unavailable */
+}
+.hero-art.fallback {
+  /* only when WebGL is unavailable */
   background: radial-gradient(40% 70% at 74% 45%, #fdf3ff 0%, #f1d2ff 35%, #c9a2ff 52%, transparent 72%);
 }
 .shader {

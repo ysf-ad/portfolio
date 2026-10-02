@@ -10,7 +10,7 @@
   const canvas = document.querySelector(".shader");
   if (!canvas || window.__smokeActive) return; // smoke.js (the fluid simulation) is running instead
   const gl = canvas.getContext("webgl", { antialias: false, premultipliedAlpha: false });
-  if (!gl) return;
+  if (!gl) return canvas.parentElement.classList.add("fallback");
 
   const vertexSource = `
     attribute vec2 position;
@@ -133,7 +133,8 @@
     gl.linkProgram(program);
     if (!gl.getProgramParameter(program, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(program));
   } catch (e) {
-    canvas.remove(); // keep the CSS fallback
+    canvas.parentElement.classList.add("fallback"); // show the CSS gradient instead
+    canvas.remove();
     return;
   }
   gl.useProgram(program);
