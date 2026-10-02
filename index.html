@@ -3,181 +3,178 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="color-scheme" content="dark" />
-    <title>Yousif Aldakoki — Software Engineering & ML Research</title>
+    <title>Yousif Aldakoki — ML Research &amp; Software Engineering</title>
     <meta
       name="description"
-      content="Yousif Aldakoki. Software engineering at York University, machine learning research, open-source tools, and industrial software. Selected projects and publications."
+      content="Yousif Aldakoki. Software engineering at York University. First-author machine learning research (IEEE TNNLS, RadarConf, GLOBECOM), open-source tools, and industrial software."
     />
     <link rel="canonical" href="https://yousifaldakoki.com/" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Yousif Aldakoki — Projects & Research" />
+    <meta property="og:title" content="Yousif Aldakoki — ML Research & Software Engineering" />
     <meta
       property="og:description"
-      content="Software engineering, machine learning research, and open-source tools. Explore my projects, publications, and resume."
+      content="First-author ML research (IEEE TNNLS, RadarConf, GLOBECOM), open-source tools, and industrial software."
     />
     <meta property="og:url" content="https://yousifaldakoki.com/" />
-    <meta
-      property="og:image"
-      content="https://yousifaldakoki.com/assets/embedding-explorer.png"
-    />
-    <meta
-      property="og:image:alt"
-      content="Semantic Auto-Linker's embedding explorer in Obsidian"
-    />
+    <meta property="og:image" content="https://yousifaldakoki.com/assets/before-after.png" />
     <link rel="icon" type="image/png" href="./favicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500&display=swap"
+    />
+    <script>
+      // light by default; dark only if the visitor chose it (toggle in the header)
+      try {
+        if (localStorage.getItem("theme") === "dark") document.documentElement.dataset.theme = "dark";
+      } catch (e) {}
+    </script>
     <link rel="stylesheet" href="./styles.css" />
     <script src="./site.js" defer></script>
+    <script src="./smoke.js" defer></script>
+    <script src="./shader.js" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
     <div class="page">
-      <header id="top">
-        <div class="identity">
-          <h1>Yousif Aldakoki</h1>
+      <header>
+        <!-- one piece of flair: a softly morphing gradient glow behind the header (WebGL in shader.js, CSS fallback) -->
+        <div class="hero-art" aria-hidden="true"><canvas class="shader"></canvas></div>
+        <div class="top-row intro-in" style="--d: 0ms">
           <p class="location">Toronto, Canada</p>
+          <button class="theme-toggle" type="button" aria-label="Switch to dark mode">Dark</button>
         </div>
-        <p class="intro">
-          Software Engineering at York University.<br />I build ML systems,
-          open-source tools, and industrial software.
-        </p>
-        <div class="header-links">
-          <div class="contact-links">
-            <a href="mailto:yousifaldakoki@gmail.com"
-              >Email <span aria-hidden="true">↗</span></a
-            ><a href="https://github.com/ysf-ad"
-              >GitHub <span aria-hidden="true">↗</span></a
-            ><a href="https://linkedin.com/in/yousif-aldakoki"
-              >LinkedIn <span aria-hidden="true">↗</span></a
-            ><a class="resume" href="./assets/Yousif-Aldakoki-Resume.pdf"
-              >Resume <span aria-hidden="true">↗</span></a
-            >
+        <div class="hero">
+          <div class="hero-text">
+            <h1 class="name" aria-label="Yousif Aldakoki">
+              <span class="word" aria-hidden="true"><span style="--i: 0">Yousif</span></span>
+              <span class="word" aria-hidden="true"><span style="--i: 1">Aldakoki</span></span>
+            </h1>
+            <p class="intro intro-in" style="--d: 420ms">
+              Software engineering student at York University, working on ML research, open-source tools, and
+              industrial software.</p>
+            <nav class="contact intro-in" aria-label="Contact" style="--d: 520ms">
+              <a href="mailto:yousifaldakoki@gmail.com">Email</a>
+              <a href="https://github.com/ysf-ad">GitHub</a>
+              <a href="https://linkedin.com/in/yousif-aldakoki">LinkedIn</a>
+            </nav>
           </div>
         </div>
       </header>
+
       <main id="main">
-        <div class="work-grid">
-          <section id="projects" aria-labelledby="projects-title">
-            <div class="section-heading">
-              <h2 id="projects-title">Projects</h2>
-              <a
-                class="subtle-link"
-                href="https://github.com/ysf-ad?tab=repositories"
-                >All on GitHub <span aria-hidden="true">↗</span></a
-              >
-            </div>
-            <article class="project featured">
-              <div class="featured-copy">
-                <h3>
-                  <a href="https://github.com/ysf-ad/semantic-auto-linker"
-                    >Semantic Auto-Linker <span aria-hidden="true">↗</span></a
-                  >
-                </h3>
-                <p>
-                  An Obsidian plugin for local semantic search and suggested
-                  note links. Built with TypeScript; downloaded over 1,000
-                  times.
-                  <a href="./assets/embedding-explorer.png">Screenshot</a>
+
+        <section id="research" class="intro-in" aria-labelledby="research-title" style="--d: 640ms">
+          <div class="section-heading">
+            <h2 id="research-title">Research</h2>
+            <p class="section-note">3 first-author papers · 2026</p>
+          </div>
+
+          <ol class="papers">
+            <li class="paper">
+              <div class="venue">
+                <span class="venue-tag">TNNLS</span>
+                <span class="year">2026</span>
+              </div>
+              <div>
+                <h3>IQ-CMAE: Multi-modal Contrastive Masked Autoencoder for IQ-based Signal Classification</h3>
+                <p class="paper-meta">IEEE Transactions on Neural Networks and Learning Systems · Published</p>
+                <p class="paper-links">
+                  <a href="https://ieeexplore.ieee.org/document/11713348">Paper (IEEE Xplore)</a>
+                  <a href="https://github.com/ysf-ad/iq-cmae">Code</a>
+                  <span class="doi">DOI 10.1109/TNNLS.2026.3728415</span>
                 </p>
               </div>
+            </li>
+            <li class="paper">
+              <div class="venue">
+                <span class="venue-tag">RadarConf</span>
+                <span class="year">2026</span>
+              </div>
+              <div>
+                <h3>Transformer-based MCTS for Cognitive Radar Task Scheduling in Dynamic Environments</h3>
+                <p class="paper-meta">IEEE Radar Conference · Published</p>
+                <p class="paper-links">
+                  <a href="https://ieeexplore.ieee.org/document/11675420">Paper (IEEE Xplore)</a>
+                </p>
+              </div>
+            </li>
+            <li class="paper">
+              <div class="venue">
+                <span class="venue-tag">GLOBECOM</span>
+                <span class="year">2026</span>
+              </div>
+              <div>
+                <h3>Sparse Mixture-of-Experts Transformer for IQ-based 5G-NR Synchronization Signal Classification</h3>
+                <p class="paper-meta">IEEE Global Communications Conference · Accepted</p>
+              </div>
+            </li>
+          </ol>
+          <p class="review-note">Reviewer for IEEE GLOBECOM and IEEE OJCOMS · 6 manuscripts</p>
+        </section>
+
+        <section id="projects" aria-labelledby="projects-title">
+          <div class="section-heading">
+            <h2 id="projects-title">Projects</h2>
+            <a class="section-note" href="https://github.com/ysf-ad?tab=repositories">All on GitHub</a>
+          </div>
+
+          <div class="project-grid">
+            <article class="project reveal">
+              <h3><a href="https://github.com/ysf-ad/semantic-auto-linker">Semantic Auto-Linker</a></h3>
+              <p class="metric">2,000+ downloads · open source</p>
+              <p>An Obsidian plugin that suggests links between notes by meaning. Preview how the links reshape your vault's graph, then apply only the ones you accept.</p>
+              <ul class="tags" aria-label="Technologies"><li>TypeScript</li><li>Embeddings</li><li>Obsidian</li></ul>
             </article>
-            <article class="project">
-              <h3>
-                <a href="https://github.com/ysf-ad/mlp-cpp"
-                  >Neural network from scratch
-                  <span aria-hidden="true">↗</span></a
-                >
-              </h3>
-              <p>
-                A neural network implemented in C++, with handwritten training
-                and CUDA-accelerated inference. 97% test accuracy on MNIST.
-              </p>
+            <article class="project reveal">
+              <h3><a href="https://github.com/ysf-ad/waste-fusion-retrieval">Real-time waste classifier</a></h3>
+              <p class="metric">94% held-out accuracy · 1st place, York Engineering Competition</p>
+              <p>Classifies waste in real time on an edge camera.</p>
+              <ul class="tags" aria-label="Technologies"><li>PyTorch</li><li>ONNX</li><li>Edge</li></ul>
             </article>
-            <article class="project">
-              <h3>
-                <a href="https://github.com/ysf-ad/waste-fusion-retrieval"
-                  >Real-time waste classifier
-                  <span aria-hidden="true">↗</span></a
-                >
-              </h3>
-              <p>
-                An edge-camera classifier built with PyTorch and ONNX. 94%
-                held-out test accuracy; first place at the York Engineering
-                Competition.
-              </p>
+            <article class="project reveal">
+              <h3><a href="https://github.com/ysf-ad/mlp-cpp">Neural network from scratch</a></h3>
+              <p class="metric">97% test accuracy on MNIST</p>
+              <p>Training written by hand in C++, with CUDA-accelerated inference.</p>
+              <ul class="tags" aria-label="Technologies"><li>C++</li><li>CUDA</li></ul>
             </article>
-            <article class="project">
-              <h3>
-                <a href="https://github.com/ysf-ad/extruder-data"
-                  >Manufacturing analytics <span aria-hidden="true">↗</span></a
-                >
-              </h3>
-              <p>
-                Live production dashboards for DigitMakers, connecting PLC data
-                to the cloud through a Raspberry Pi and replacing manual
-                reporting.
-              </p>
+            <article class="project reveal">
+              <h3><a href="https://github.com/ysf-ad/extruder-data">Manufacturing analytics</a></h3>
+              <p class="metric">Replaced manual production reporting</p>
+              <p>Live dashboards for DigitMakers, streaming PLC data to the cloud through a Raspberry Pi.</p>
+              <ul class="tags" aria-label="Technologies"><li>PLC</li><li>Raspberry Pi</li><li>Cloud</li></ul>
             </article>
-          </section>
-          <section id="research" aria-labelledby="research-title">
-            <div class="section-heading">
-              <h2 id="research-title">Research</h2>
+          </div>
+        </section>
+
+
+        <section id="experience" aria-labelledby="experience-title">
+          <div class="section-heading">
+            <h2 id="experience-title">Experience</h2>
+          </div>
+          <div class="jobs">
+            <div class="job reveal">
+              <p class="dates">May 2025 – Aug 2026</p>
+              <div>
+                <h3>Undergraduate Researcher <span>· York University</span></h3>
+                <p>Research ideation, method development, and evaluation, leading to three first-author papers.</p>
+              </div>
             </div>
-            <p class="research-note">
-              Three first-author papers accepted in 2026.
-            </p>
-            <article class="paper">
-              <h3>
-                <a href="https://github.com/ysf-ad/iq-cmae"
-                  >IQ-CMAE: Multi-modal Contrastive Masked Autoencoder for
-                  IQ-based Signal Classification
-                  <span aria-hidden="true">↗</span></a
-                >
-              </h3>
-              <p>IEEE Transactions on Neural Networks and Learning Systems</p>
-            </article>
-            <article class="paper">
-              <h3>
-                <a href="https://github.com/ysf-ad/radar-dnn-mcts"
-                  >Transformer-based MCTS for Cognitive Radar Task Scheduling in
-                  Dynamic Environments <span aria-hidden="true">↗</span></a
-                >
-              </h3>
-              <p>IEEE RadarConf</p>
-            </article>
-            <article class="paper">
-              <h3>
-                Sparse Mixture-of-Experts Transformer for IQ-based 5G-NR
-                Synchronization Signal Classification
-              </h3>
-              <p>IEEE GLOBECOM</p>
-            </article>
-            <p class="review-note">
-              Reviewer: IEEE GLOBECOM & OJCOMS · 6 manuscripts
-            </p>
-          </section>
-        </div>
-        <section class="experience" aria-labelledby="experience-title">
-          <h2 id="experience-title">Experience</h2>
-          <div class="experience-grid">
-            <div>
-              <h3>Software Developer <span>· DigitMakers</span></h3>
-              <p>Jun 2024 – Present · Part-time</p>
-              <p>Web integrations, automation, and PLC controls.</p>
-            </div>
-            <div>
-              <h3>Undergraduate Researcher <span>· York University</span></h3>
-              <p>May 2025 – Aug 2026</p>
-              <p>Research ideation, method development, and evaluation.</p>
+            <div class="job reveal">
+              <p class="dates">Jun 2024 – Present</p>
+              <div>
+                <h3>Software Developer <span>· DigitMakers · Part-time</span></h3>
+                <p>Web integrations, automation, and PLC controls.</p>
+              </div>
             </div>
           </div>
         </section>
       </main>
+
       <footer>
-        <span>© <span id="year">2026</span> Yousif Aldakoki</span
-        ><a href="mailto:yousifaldakoki@gmail.com"
-          >yousifaldakoki@gmail.com <span aria-hidden="true">↗</span></a
-        >
+        <span>© <span id="year">2026</span> Yousif Aldakoki</span>
+        <a href="mailto:yousifaldakoki@gmail.com">yousifaldakoki@gmail.com</a>
       </footer>
     </div>
   </body>
