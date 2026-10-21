@@ -160,6 +160,7 @@
         float density = max(dye.r, max(dye.g, dye.b));
         vec3 hue = dye / max(density, 0.0001);
         float a = 1.0 - exp(-density * 1.6);
+        a *= mix(1.0, 0.45, dark); // dark mode: the glow is dimmed so light text stays readable when smoke passes behind it
         vec3 page = mix(vec3(0.984, 0.984, 0.98), vec3(0.067, 0.067, 0.075), dark);
         vec3 light = mix(page, hue, a * 0.82);
         vec3 glow = page + hue * a * 0.9;

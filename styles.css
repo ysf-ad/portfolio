@@ -498,3 +498,8 @@ header {
   height: 100%;
   display: block;
 }
+
+/* dark mode: a soft dark halo keeps the hero text readable where the glowing smoke passes behind it */
+:root[data-theme="dark"] .hero-text :is(h1, .intro, .contact a) {
+  text-shadow: 0 0 14px rgba(8, 8, 10, 0.75), 0 0 3px rgba(8, 8, 10, 0.6);
+}
