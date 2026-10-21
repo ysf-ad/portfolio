@@ -75,21 +75,31 @@ header {
 }
 .top-row {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
 }
 .location {
-  color: var(--faint);
-  font-size: 14px;
+  margin: 18px 0 0;
+  font-size: 13px;
 }
+/* one glass style shared by the location pill and the theme toggle: translucent, blurred, hairline edge, no shadow */
+.location-pill,
 .theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   font: inherit;
   font-size: 13px;
+  line-height: 1.4;
   color: var(--muted);
-  background: var(--bg); /* stays readable over the hero glow */
-  border: 1px solid var(--line);
-  border-radius: 999px;
   padding: 4px 12px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--bg) 42%, transparent);
+  border: 1px solid color-mix(in srgb, var(--fg) 12%, transparent);
+  -webkit-backdrop-filter: blur(12px) saturate(1.5);
+  backdrop-filter: blur(12px) saturate(1.5);
+}
+.theme-toggle {
   cursor: pointer;
 }
 .theme-toggle:hover {
@@ -120,7 +130,7 @@ h1 {
 .contact {
   display: flex;
   gap: 20px;
-  margin-top: 24px;
+  margin-top: 16px;
   font-weight: 500;
 }
 .contact a {

@@ -17,6 +17,15 @@
   gl.getExtension("EXT_color_buffer_float");
   window.__smokeActive = true;
 
+  // dithering of the smoke: chunky ordered-dither pixels. Try ?dither=off (original), ?dither=4 (block size in CSS px),
+  // ?levels=3 (number of opacity steps)
+  const query = new URLSearchParams(location.search);
+  const ditherParam = query.get("dither");
+  const DITHER_CSS_PX = ditherParam === "off" || ditherParam === "0" ? 0 : Math.max(1, Number(ditherParam) || 4);
+  const DITHER_LEVELS = Math.max(2, Number(query.get("levels")) || 5);
+  // smoke source: a line across the top (default) or the original single jet (?source=jet)
+  const LINE_SOURCE = query.get("source") !== "jet";
+
 
   // ---------------------------------------------------------------------------------------------------------------
   // shaders
@@ -51,6 +60,31 @@
         p.x *= aspectRatio;
         vec3 splat = exp(-dot(p, p) / radius) * color;
         outColor = vec4(texture(uTarget, vUv).xyz + splat, 1.0);
+      }`),
+    // a line source: releases velocity and dye along a whole horizontal line (a curtain), with plumes of varying
+    // strength and the prism palette shifting along it; mode 0 writes velocity, mode 1 writes dye
+    lineSplat: header(`
+      uniform sampler2D uTarget; uniform float lineY, radius, time, intensity, mode, palettePhase, lineFrom, lineTo;
+      uniform vec2 vel; uniform vec3 palette[6];
+      void main() {
+        float dy = vUv.y - lineY;
+        float g = exp(-dy * dy / radius);
+        float x = vUv.x;
+        // peaks and troughs along the line: three slowly drifting waves of different size, so some stretches jet
+        // out hard (peaks) while others only seep (troughs)
+        float w = 0.5 * sin(x * 9.0 + time * 0.45) + 0.3 * sin(x * 21.0 - time * 0.7 + 1.7) + 0.2 * sin(x * 37.0 + time * 1.0 + 4.0);
+        float n = pow(clamp(0.55 + 0.5 * w, 0.0, 1.0), 1.4); // plume strength, ~0..1, sharpened so peaks stand out
+        float edge = smoothstep(lineFrom, lineFrom + 0.08, x) * (1.0 - smoothstep(lineTo - 0.08, lineTo, x));
+        vec4 base = texture(uTarget, vUv);
+        if (mode < 0.5) {
+          vec2 v = vel * (0.4 + 1.0 * n) + vec2(sin(x * 9.0 + time * 0.7) * 10.0, 0.0); // peaks also reach further down
+          outColor = vec4(base.xy + v * g * edge, 0.0, 1.0);
+        } else {
+          float f = fract(x * 0.9 + palettePhase) * 6.0;
+          int i = int(floor(f));
+          vec3 c = mix(palette[i], palette[(i + 1) % 6], f - float(i));
+          outColor = vec4(base.xyz + c * intensity * g * n * edge, 1.0);
+        }
       }`),
     advection: header(`
       uniform sampler2D uVelocity, uSource; uniform vec2 texelSize; uniform float dt, dissipation;
@@ -108,10 +142,21 @@
       }`),
     // smoke over the page: light mode tints the paper, dark mode glows; fine static grain where there is smoke
     display: header(`
-      uniform sampler2D uTexture; uniform float dark; uniform vec2 resolution;
+      uniform sampler2D uTexture; uniform float dark; uniform vec2 resolution; uniform float ditherPx; uniform float ditherLevels;
       float hash(vec2 p) { vec3 p3 = fract(vec3(p.xyx) * 0.1031); p3 += dot(p3, p3.yzx + 33.33); return fract((p3.x + p3.y) * p3.z); }
+      // 8x8 ordered (Bayer) threshold in [0,1), built from bit interleaving so no lookup table is needed
+      float bayer8(vec2 c) {
+        ivec2 i = ivec2(mod(c, 8.0));
+        int x = i.x ^ i.y, v = 0;
+        v |= ((i.y >> 0) & 1) << 5 | ((x >> 0) & 1) << 4;
+        v |= ((i.y >> 1) & 1) << 3 | ((x >> 1) & 1) << 2;
+        v |= ((i.y >> 2) & 1) << 1 | ((x >> 2) & 1) << 0;
+        return (float(v) + 0.5) / 64.0;
+      }
       void main() {
-        vec3 dye = texture(uTexture, vUv).rgb;
+        // dithering: sample the smoke once per chunky pixel block, then quantise its opacity with the Bayer matrix
+        vec2 uvQ = ditherPx > 0.0 ? (floor(gl_FragCoord.xy / ditherPx) + 0.5) * ditherPx / resolution : vUv;
+        vec3 dye = texture(uTexture, uvQ).rgb;
         float density = max(dye.r, max(dye.g, dye.b));
         vec3 hue = dye / max(density, 0.0001);
         float a = 1.0 - exp(-density * 1.6);
@@ -119,7 +164,15 @@
         vec3 light = mix(page, hue, a * 0.82);
         vec3 glow = page + hue * a * 0.9;
         vec3 col = mix(light, glow, dark);
-        col += (hash(floor(gl_FragCoord.xy)) - 0.5) * 0.06 * a;
+        if (ditherPx > 0.0) {
+          float t = bayer8(floor(gl_FragCoord.xy / ditherPx));
+          float aq = floor(a * ditherLevels + t) / ditherLevels; // 0..1 in ditherLevels steps, ordered pattern
+          vec3 lightQ = mix(page, hue, aq * 0.82);
+          vec3 glowQ = page + hue * aq * 0.9;
+          col = mix(lightQ, glowQ, dark);
+        } else {
+          col += (hash(floor(gl_FragCoord.xy)) - 0.5) * 0.06 * a;
+        }
         outColor = vec4(col, 1.0);
       }`),
   };
@@ -326,6 +379,8 @@
     gl.uniform1i(u.uTexture, dye.read.attach(0));
     gl.uniform1f(u.dark, document.documentElement.dataset.theme === "dark" ? 1 : 0);
     gl.uniform2f(u.resolution, gl.drawingBufferWidth, gl.drawingBufferHeight);
+    gl.uniform1f(u.ditherPx, DITHER_CSS_PX > 0 ? DITHER_CSS_PX * (gl.drawingBufferWidth / Math.max(canvas.clientWidth, 1)) : 0);
+    gl.uniform1f(u.ditherLevels, DITHER_LEVELS);
     blit(null);
   }
 
@@ -367,10 +422,41 @@
     return aimFrom + (aimTo - aimFrom) * k * k * (3 - 2 * k);
   }
   const BUILD = 3.5; // seconds until it reaches full strength
+  // the line source: one pass for velocity, one for dye, across the whole width just above the top edge
+  function emitLine(time, dt, eased) {
+    const angle = -Math.PI / 2 - aim(time) * 0.35; // gentle overall tilt, much less than the single jet
+    const speed = 30 - 6 * eased;
+    const flat = [];
+    for (const c of palette) flat.push(c[0], c[1], c[2]);
+    const lineFrom = 0.0, lineTo = 1.0;
+    let u = use("lineSplat");
+    gl.uniform1f(u.lineY, 1.02);
+    gl.uniform1f(u.radius, 0.0035 + 0.0045 * eased);
+    gl.uniform1f(u.time, time);
+    gl.uniform1f(u.palettePhase, time * 0.05);
+    gl.uniform1f(u.lineFrom, lineFrom);
+    gl.uniform1f(u.lineTo, lineTo);
+    gl.uniform3fv(u["palette[0]"], flat);
+    gl.uniform1f(u.mode, 0);
+    gl.uniform2f(u.vel, Math.cos(angle) * speed, Math.sin(angle) * speed);
+    gl.uniform1f(u.intensity, 0);
+    gl.uniform1i(u.uTarget, velocity.read.attach(0));
+    blit(velocity.write);
+    velocity.swap();
+    gl.uniform1f(u.mode, 1);
+    gl.uniform1f(u.intensity, 4.5 * (0.35 + 0.65 * eased) * dt);
+    gl.uniform1i(u.uTarget, dye.read.attach(0));
+    blit(dye.write);
+    dye.swap();
+  }
   function emit(time, dt) {
     const ramp = Math.min(1, Math.max(0, (time - DELAY) / BUILD));
     if (ramp <= 0) return;
     const eased = ramp * ramp * (3 - 2 * ramp);
+    if (LINE_SOURCE) {
+      emitLine(time, dt, eased);
+      return;
+    }
     const s = source();
     // the first jet is tilted down-left onto "Yousif"; afterwards it eases between varied aims (left, centre, right)
     const angle = -Math.PI / 2 - aim(time) + Math.sin(time * 1.3) * 0.05;
