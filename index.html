@@ -30,10 +30,10 @@
         if (localStorage.getItem("theme") === "dark") document.documentElement.dataset.theme = "dark";
       } catch (e) {}
     </script>
-    <link rel="stylesheet" href="./styles.css?v=20261021" />
-    <script src="./site.js?v=20261021" defer></script>
-    <script src="./smoke.js?v=20261021" defer></script>
-    <script src="./shader.js?v=20261021" defer></script>
+    <link rel="stylesheet" href="./styles.css?v=20261021b" />
+    <script src="./site.js?v=20261021b" defer></script>
+    <script src="./smoke.js?v=20261021b" defer></script>
+    <script src="./shader.js?v=20261021b" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -148,7 +148,15 @@
               </div>
             </article>
             <article class="project reveal">
-              <img class="project-art soft" src="assets/manufacturing-chart.webp" alt="Control chart from the production dashboard" loading="lazy" decoding="async" />
+              <img class="project-art" src="assets/mlp.svg" alt="" aria-hidden="true" loading="lazy" decoding="async" />
+              <div class="project-body">
+                <h3><a href="https://github.com/ysf-ad/mlp-cpp">Neural network from scratch</a></h3>
+                <p class="metric">97% test accuracy on MNIST</p>
+                <p>Training written by hand in C++, with CUDA-accelerated inference.</p>
+                <ul class="tags" aria-label="Technologies"><li>C++</li><li>CUDA</li></ul>
+              </div>
+            </article>
+            <article class="project compact reveal">
               <div class="project-body">
                 <h3><a href="https://github.com/ysf-ad/extruder-data">Manufacturing analytics</a></h3>
                 <p class="metric">Replaced manual production reporting</p>
